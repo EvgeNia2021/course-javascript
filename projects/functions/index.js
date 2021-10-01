@@ -30,7 +30,9 @@ function returnFirstArgument(value) {
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b) {}
+function sumWithDefaults(a, b = 100) {
+  return a + b;
+}
 
 /*
  Задание 3:
@@ -40,7 +42,9 @@ function sumWithDefaults(a, b) {}
  Пример:
    returnFnResult(() => 'привет') вернет 'привет'
  */
-function returnFnResult(fn) {}
+function returnFnResult(fn) {
+  return fn();
+}
 
 /*
  Задание 4:
@@ -55,7 +59,11 @@ function returnFnResult(fn) {}
    console.log(f()); // выведет 12
    console.log(f()); // выведет 13
  */
-function returnCounter(number) {}
+function returnCounter(number = 0) {
+  return function f() {
+    return ++number;
+  };
+}
 
 /*
  Задание 5 *:
@@ -66,7 +74,13 @@ function returnCounter(number) {}
  Пример:
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
-function returnArgumentsArray() {}
+function returnArgumentsArray() {
+  const result = [];
+  for (let i = 0; i < arguments.length; i++) {
+    result[i] = arguments[i];
+  }
+  return result;
+}
 
 /*
  Задание 6 *:
