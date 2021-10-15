@@ -49,9 +49,9 @@ function prepend(what, where) {
 function findAllPSiblings(where) {
   const array = [];
 
-  for (const node of where.children) {
-    if (node.nextElementSibling.tagName === 'P') {
-      array.push(node);
+  for (let i = 0; i < where.children.length - 1; i++) {
+    if (where.children[i].nextElementSibling.tagName === 'P') {
+      array.push(where.children[i]);
     }
   }
   return array;
