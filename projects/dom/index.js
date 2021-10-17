@@ -49,11 +49,18 @@ function prepend(what, where) {
 function findAllPSiblings(where) {
   const array = [];
 
-  for (let i = 0; i < where.children.length - 1; i++) {
-    if (where.children[i].nextElementSibling.tagName === 'P') {
-      array.push(where.children[i]);
+  //for (let i = 0; i < where.children.length - 1; i++) {
+  // if (where.children[i].nextElementSibling.tagName === 'P') {
+  //   array.push(where.children[i]);
+  // }
+  //}
+
+  for (const node of where.children) {
+    if (node.nextElementSibling && node.nextElementSibling.tagName === 'P') {
+      array.push(node);
     }
   }
+
   return array;
 }
 
@@ -117,6 +124,7 @@ function deleteTextNodes(where) {
 function deleteTextNodesRecursive(where) {
   for (let i = 0; i < where.childNodes.length; i++) {
     const node = where.childNodes[i];
+
     if (node.nodeType === 3) {
       where.removeChild(node);
       i--;
