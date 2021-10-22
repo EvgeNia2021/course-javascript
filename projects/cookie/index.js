@@ -45,8 +45,36 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
-filterNameInput.addEventListener('input', function () {});
+//получаем куки
+function parseCookies() {
+  document.cookie.split('; ').reduce((prev, current) => {
+    const [name, value] = current.split('=');
+    prev[name] = value;
+    return prev;
+  }, {})
+}
 
-addButton.addEventListener('click', () => {});
+function isMatching(full, chunk) {
+  return full.toLowerCase().includes(chunk.toLowerCase());
+}
 
-listTable.addEventListener('click', (e) => {});
+
+filterNameInput.addEventListener('input', function () {
+  renderTable();
+});
+
+addButton.addEventListener('click', function () {
+  document.cookie = `${addNameInput.value}=${addValueInput.value}; expires=Wed, 31 Oct 2021 03:45:06 GMT;`;
+
+  addNameInput.value = '';
+  addValueInput.value = '';
+});
+
+listTable.addEventListener('click', (e) => {
+  console.log(e.target);
+  if (e.target.dataset.key) {
+    document.cookie = e.target.dataset.key;
+  }
+  renderTable();
+
+});
