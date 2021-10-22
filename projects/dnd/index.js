@@ -18,11 +18,25 @@
 import './dnd.html';
 
 const homeworkContainer = document.querySelector('#app');
+//let counter = 0;
 
 document.addEventListener('mousemove', (e) => {});
 
 export function createDiv() {
-  
+  const newDiv = document.createElement('div');
+  // counter++;
+
+  newDiv.classList.add('draggable-div');
+
+  newDiv.style.backgroundColor = 'gold';
+  newDiv.style.height = '150px';
+  newDiv.style.width = '150px';
+  newDiv.style.top = '0';
+  newDiv.style.left = '0';
+
+  newDiv.draggable = true;
+
+  return newDiv;
 }
 
 const addDivButton = homeworkContainer.querySelector('#addDiv');
