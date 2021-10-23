@@ -45,36 +45,93 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
-//получаем куки
-function parseCookies() {
-  document.cookie.split('; ').reduce((prev, current) => {
-    const [name, value] = current.split('=');
-    prev[name] = value;
-    return prev;
-  }, {})
+//возвращаем куки
+const cookiesMap = getCookies();
+let filterValue = '';
+
+updateTable();
+
+//преобразовываем куки
+function getCookies() {
+  return document.cookie
+    .split('; ')
+    .filter(Boolean)
+    .map((cookie) => cookie.match(/^([^=]+)=(.+)/))
+    .reduce((obj, [, name, value]) => {
+      obj.set(name, value);
+
+      return obj;
+    }, new Map());
 }
 
-function isMatching(full, chunk) {
-  return full.toLowerCase().includes(chunk.toLowerCase());
-}
-
+//function isMatching(full, chunk) {
+//return full.toLowerCase().includes(chunk.toLowerCase());
+//}
 
 filterNameInput.addEventListener('input', function () {
-  renderTable();
+  filterValue = this.value;
+  updateTable();
 });
 
 addButton.addEventListener('click', function () {
-  document.cookie = `${addNameInput.value}=${addValueInput.value}; expires=Wed, 31 Oct 2021 03:45:06 GMT;`;
+  const name = encodeURIComponent(addNameInput.value.trim());
+  const value = encodeURIComponent(addValueInput.value.trim());
+  if (!name) {
+    return;
+  }
+  document.cookie = `${name}=${value}`;
+  cookiesMap.set(name, value);
 
-  addNameInput.value = '';
-  addValueInput.value = '';
+  updateTable();
 });
 
 listTable.addEventListener('click', (e) => {
-  console.log(e.target);
-  if (e.target.dataset.key) {
-    document.cookie = e.target.dataset.key;
+  const { role, cookieName } = e.target.dataset;
+  if (role === 'remove-cookie') {
+    cookiesMap.delete(cookieName);
+    document.cookie = `${cookieName}=deleted; max-age=0`;
+    updateTable();
   }
-  renderTable();
-
 });
+
+function updateTable() {
+  const fragment = document.createDocumentFragment();
+  let total = 0;
+
+  listTable.innerHTML = '';
+
+  for (const [name, value] of cookiesMap) {
+    if (
+      filterValue &&
+      !name.toLowerCase().includes(filterValue.toLowerCase()) &&
+      !value.toLowerCase().includes(filterValue.toLowerCase())
+    ) {
+      continue;
+    }
+    total++;
+
+    const tr = document.createElement('tr');
+    const nameTD = document.createElement('td');
+    const valueTD = document.createElement('td');
+    const removeTD = document.createElement('td');
+    const removeButton = document.createElement('button');
+
+    removeButton.dataset.role = 'remove-cookie';
+    removeButton.dataset.cookieName = name;
+    removeButton.textContent = 'Удалить';
+    nameTD.textContent = name;
+    valueTD.textContent = value;
+    valueTD.classList.add('value');
+    tr.append(nameTD, valueTD, removeTD);
+    removeTD.append(removeButton);
+
+    fragment.append(tr);
+  }
+
+  if (total) {
+    listTable.parentNode.classList.remove('hidden');
+    listTable.append(fragment);
+  } else {
+    listTable.parentNode.classList.add('hidden');
+  }
+}
