@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Geo VP-1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div id="balloon">
+    
+      
+      <button id="close__btn">+</button>
+    
+    <div id="balloon__comments">Отзывов пока нет</div>
+    <div id="input-form">
+      <h3 class="input-form__title">Отзыв:</h3>
+      <input type="text" id="input__name" class="input" placeholder="Укажите ваше имя"/>
+      <input type="text" id="input__place" class="input" placeholder="Укажите место"/>
+      <textarea name="reviews" id="input__txt" class="input" cols="25" rows="5" placeholder="Оставьте отзыв"></textarea>
+      <button id="add__btn"><b>Добавить</b></button>
+    </div>
+  
+  </div>
+
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
