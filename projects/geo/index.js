@@ -1,4 +1,8 @@
-new Promise(resolve => ymaps.ready(resolve))
+import './index.html'
+import './main.css'
+
+window.addEventListener('DOMContentLoaded', () => {
+  new Promise(resolve => ymaps.ready(resolve))
   .then(() => init())
   .catch(e => console.log(`Ошибка: ${e.message}`));
 
@@ -38,17 +42,32 @@ function init() {
     preset: "islands#oliveIcon",
     groupByCoordinates: true,
     clusterDisableClickZoom: true,
-    clusterHideIconOnBalloonOpen: false,
-    clusterOpenBalloonOnClick: true,
-    clusterBalloonContentLayout: "cluster#balloonCarousel"
-
   });
+
+  clusterer.events.add('click', (e) => {
+    coordinates = e.get('target').geometry.getCoordinates() //получение координат кластера
+  })
 
   clusterer.add(placemarks);
   myMap.geoObjects.add(clusterer);
   //clusterer.events.add('click', () => {
   //openBalloon();};
   reviews = getFromLocalStorage();
+
+  reviews.forEach((review) => {
+    console.log(review)
+    clusterer.add(createPlacemark(review.coords, {
+      prop: {
+        balloonContentHeader: review.place,
+        balloonContentBody: `<br><br>${review.name}<br><br></br><br><br>${review.text}<br><br>`
+      },
+      custom:  {
+        preset: "islands#oliveIcon",
+        draggable: false,
+        openBalloonOnClick: false
+      }
+    }))
+  })
 
 
 
@@ -60,12 +79,27 @@ function init() {
 
 
     openBalloon();
-    myPlacemark = createPlacemark(coords);
     reverseGeo(coords);
   });
 
-  function createPlacemark(coords) {
-    return new ymaps.Placemark(coords);
+  function createPlacemark(coords, settings) {
+    const find = reviews.find((review) => JSON.stringify(review.coords) === JSON.stringify(coords))
+
+    console.log(find)
+    const placemark = new ymaps.Placemark(coords, settings.prop, settings.custom);
+    // placemark.commentContent = `<div><span><b>${inputName.value}</b></span>
+    //     <span>[${inputPlace.value}]</span>
+    //     <span>${inputText.value}</span></div><br>`;
+
+    placemark.events.add("click", (e) => {
+      openBalloon();
+
+      coordinates = e.get('target').geometry.getCoordinates() //получение координат метки
+      comments.innerHTML = `<br><br>${find.name}<br><br></br><br><br>${find.text}<br><br>`;
+
+    });
+
+    return placemark
   }
 
 
@@ -87,25 +121,34 @@ function init() {
   }
 
   addBtn.addEventListener("click", () => {
+    console.log('sdsdsd')
     if (inputName.value && inputPlace.value && inputText.value) {
+
+      let point = {
+        name: inputName.value,
+        place: inputPlace.value,
+        text: inputText.value,
+        coords: coordinates
+      }
+
+      reviews.push(point)
 
       myBalloon.style.display = "none";
       saveToLocalStorage(reviews);
 
-      const newPlacemark = new ymaps.Placemark(
-        coordinates,
-        {
-          balloonContentHeader: inputPlace.value,
-          balloonContentBody: `<br><br>${inputName.value}<br><br></br><br><br>${inputText.value}<br><br>`,
-
-
-        },
-        {
-          preset: "islands#oliveIcon",
-          draggable: false,
-          openBalloonOnClick: false
-        }
-      );
+      const newPlacemark = createPlacemark(coordinates, {
+        
+          prop: {
+            balloonContentHeader: inputPlace.value,
+            balloonContentBody: `<br><br>${inputName.value}<br><br></br><br><br>${inputText.value}<br><br>` 
+          },
+          custom: {
+            preset: "islands#oliveIcon",
+            draggable: false,
+            openBalloonOnClick: false
+          }
+        
+      })
 
 
       myMap.geoObjects.add(newPlacemark);
@@ -113,23 +156,23 @@ function init() {
       placemarks.push(newPlacemark);
 
 
-      if (comments.innerHTML === "Отзывов пока нет")
-        comments.innerHTML = "";
+      // if (comments.innerHTML === "Отзывов пока нет")
+      //   comments.innerHTML = "";
 
-      newPlacemark.commentContent = `<div><span><b>${inputName.value}</b></span>
-        <span>[${inputPlace.value}]</span>
-        <span>${inputText.value}</span></div><br>`;
-      comments.innerHTML += newPlacemark.commentContent;
+      // // newPlacemark.commentContent = `<div><span><b>${inputName.value}</b></span>
+      // //   <span>[${inputPlace.value}]</span>
+      // //   <span>${inputText.value}</span></div><br>`;
+      // comments.innerHTML += newPlacemark.commentContent;
 
 
       clearInputs();
 
 
-      newPlacemark.events.add("click", () => {
-        openBalloon();
-        comments.innerHTML = newPlacemark.commentContent;
+      // newPlacemark.events.add("click", () => {
+      //   openBalloon();
+      //   comments.innerHTML = newPlacemark.commentContent;
 
-      });
+      // });
     } else {
       alert("Не все поля заполнены");
     }
@@ -169,3 +212,4 @@ const openBalloon = () => {
   myBalloon.style.left = event.clientX + "px";
   myBalloon.style.display = "block";
 };
+})
