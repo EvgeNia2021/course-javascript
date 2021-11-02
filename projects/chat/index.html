@@ -1,0 +1,92 @@
+<!-- <!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">  -->
+<title>VP-2 Chat</title>
+<link rel="stylesheet" href="./main.css">
+<!-- </head>  -->
+
+<body class="clearfix">
+
+  <div class="auth" >
+    <div class="auth__image-wrapper">
+   
+        <svg class="photo-icon">
+          <use xlink:href="./sprite.svg#photo-icon"></use>
+        </svg>
+    
+    </div>
+    <div class="auth__title">Авторизация</div>
+    <div class="auth__instruction">Введите пожалуйста свой ник для дальнейшей авторизации</div>
+    <form class="auth__form">
+      <div class="reg__container">
+        <input type="text" id="nickname" class="auth__form-input" placeholder="Ведите свой ник">
+      </div>
+      <button class="auth__btn">Войти</button>
+    </form>
+  </div>
+  <div class="avatar-block" style="display: none;">
+    <div class="avatar-block__title">Загрузка фото</div>
+
+    <form class="avatar-block__upload">
+      <input type="submit" class="avatar-submit">
+      <div class="avatar-block__closeBtn">
+        <svg class="closeBtn">
+          <use xlink:href="./sprite.svg#closeBtn"></use>
+        </svg>
+      </div>
+    </form>
+  </div>
+  <div class="avatar-cut" style="display: none;">
+    <div class="avatar-cut__area"></div>
+    <div class="avatar-cut__instruction"></div>
+    <div class="avatar-cut__buttons">
+      <button class="avatar-cut__cancelBtn"></button>
+      <button class="avatar-cut__saveBtn"></button>
+    </div>
+  </div>
+  <div class="avatar-load" style="display: none;">
+    <div class="avatar-load__title"></div>
+    <div class="avatar-load__block">
+      <div class="avatar-load__img"></div>
+      <div class="avatar-load__nickname"></div>
+    </div>
+  </div>
+  <div class="mainarea" style="display: none;">
+  <div class="left">
+    <div class="left__menu-btn">
+      <svg class="menuBtn">
+        <use xlink:href="./sprite.svg#menuBtn"></use>
+      </svg>
+    </div>
+    <ul class="chat">
+      <li class="chat__item">
+        <div class="chat__profilePhoto"></div>
+        <div class="chat__txtBlock">
+          <div class="chat__nickname"></div>
+          <div class="chat__msg"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+    <div class="right__header">
+      <div class="right__title">Чат</div>
+      <div class="right__members"></div>
+    </div>
+    <div class="right__chatArea">
+
+    </div>
+    <div class="right__messageArea">
+      <div class="right__form">
+        <input type="text" class="right__input" placeholder="Введите сообщение..." id="messageInput">
+        <input type="submit" class="right__submit" value="Отправить" id="sendMsg">
+      </div>
+    </div>
+  </div>
+ </div> 
+
+
+</body>
+
+</html>
