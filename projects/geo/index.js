@@ -1,5 +1,5 @@
-//import './index.html'
-//import './main.css'
+import './index.html'
+import './main.css'
 
 window.addEventListener('DOMContentLoaded', () => {
   new Promise(resolve => ymaps.ready(resolve))
@@ -45,24 +45,19 @@ window.addEventListener('DOMContentLoaded', () => {
       hasBalloon: false,
     });
 
-    const filter = reviews.filter((review) => JSON.stringify(review.coords) === JSON.stringify(coords))
+
     clusterer.events.add('click', (e) => {
       coordinates = e.get('target').geometry.getCoordinates() //получение координат кластера
+      const filter = reviews.filter((review) => JSON.stringify(review.coords) === JSON.stringify(coordinates))
       openBalloon();
-      
-      reviews.forEach((review) => {
- if (coordinates === review.place) {
-           comments.innerHTML = `${filter.name} [${filter.place}] ${filter.text}`;}
-        
-       })
-
+      comments.innerHTML = filter.reduce((prev, current) => prev += `${current.name} [${current.place}] ${current.text}<br>`, '')
 
     })
- 
+
 
     clusterer.add(placemarks);
     myMap.geoObjects.add(clusterer);
-  
+
     reviews = getFromLocalStorage();
 
     reviews.forEach((review) => {
@@ -79,14 +74,10 @@ window.addEventListener('DOMContentLoaded', () => {
       }))
     })
 
-
-
-
     myMap.events.add("click", e => {
       const coords = e.get("coords");
       coordinates = coords;
       comments.innerHTML = "Отзывов пока нет";
-
 
       openBalloon();
       reverseGeo(coords);
@@ -94,10 +85,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function createPlacemark(coords, settings) {
       const find = reviews.find((review) => JSON.stringify(review.coords) === JSON.stringify(coords))
-
-      console.log(find)
       const placemark = new ymaps.Placemark(coords, settings.prop, settings.custom);
-      
+
 
       placemark.events.add("click", (e) => {
         openBalloon();
@@ -123,13 +112,11 @@ window.addEventListener('DOMContentLoaded', () => {
           ].filter(Boolean).join(', '),
           balloonContent: firstGeoObject.getAddressLine()
         });
-
-
       });
     }
 
     addBtn.addEventListener("click", () => {
-      //console.log('sdsdsd')
+
       if (inputName.value && inputPlace.value && inputText.value) {
 
         let point = {
@@ -157,7 +144,6 @@ window.addEventListener('DOMContentLoaded', () => {
             draggable: false,
             openBalloonOnClick: false
           }
-
         })
 
 
@@ -165,24 +151,8 @@ window.addEventListener('DOMContentLoaded', () => {
         clusterer.add(newPlacemark);
         placemarks.push(newPlacemark);
 
-
-        // if (comments.innerHTML === "Отзывов пока нет")
-        //   comments.innerHTML = "";
-
-        // // newPlacemark.commentContent = `<div><span><b>${inputName.value}</b></span>
-        // //   <span>[${inputPlace.value}]</span>
-        // //   <span>${inputText.value}</span></div><br>`;
-        // comments.innerHTML += newPlacemark.commentContent;
-
-
         clearInputs();
 
-
-        // newPlacemark.events.add("click", () => {
-        //   openBalloon();
-        //   comments.innerHTML = newPlacemark.commentContent;
-
-        // });
       } else {
         alert("Не все поля заполнены");
       }
@@ -203,7 +173,6 @@ window.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('reviews', JSON.stringify(arr));
   };
 
-
   closeBtn.addEventListener("click", () => {
     myBalloon.style.display = "none";
     clearInputs();
@@ -214,8 +183,6 @@ window.addEventListener('DOMContentLoaded', () => {
     inputPlace.value = "";
     inputText.value = "";
   };
-
-
 
   const openBalloon = () => {
     myBalloon.style.top = event.clientY + "px";
