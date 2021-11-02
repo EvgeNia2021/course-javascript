@@ -218,6 +218,8 @@ textarea {
   font-weight: 300;
   margin-bottom: 56px;
   width: 298px;
+  overflow: visible;
+  padding-bottom: 13px;
 }
 
 /* .auth__icon-wrapper {
@@ -236,3 +238,15 @@ textarea {
   fill: #5188C0;
 }
 
+.auth__btn {
+  width: 132px;
+  height: 43px;
+  background: 
+  #5188C1;
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 15;
+  text-transform: uppercase;
+  border-radius: 5px;
+  border: transparent;
+}
