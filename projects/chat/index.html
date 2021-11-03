@@ -1,14 +1,15 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
+
 <head>
-	<meta charset="UTF-8">  -->
-<title>VP-2 Chat</title>
-<link rel="stylesheet" href="./main.css">
-<!-- </head>  -->
+  <meta charset="UTF-8">
+  <title>VP-2 Chat</title>
+  <link rel="stylesheet" href="./main.css">
+</head>
 
 <body class="clearfix">
 
-  <div class="auth" style="display: none;">
+  <div class="auth" id="auth">
     <div class="auth__image-wrapper">
 
       <svg class="photo-icon">
@@ -18,18 +19,23 @@
     </div>
     <div class="auth__title">Авторизация</div>
     <div class="auth__instruction">Введите пожалуйста свой ник для дальнейшей авторизации</div>
-    <form class="auth__form">
+    <form class="auth__form" name="authForm">
       <div class="reg__container">
-        <input type="text" id="nickname" class="auth__form-input" placeholder="Ведите свой ник">
+        <input type="text" name="nickName" class="auth__form-input" placeholder="Ведите свой ник">
       </div>
-      <button class="auth__btn">Войти</button>
+      <button class="auth__btn" name="authBtn">Войти</button>
     </form>
   </div>
-  <div class="avatar-block">
+  <div class="avatar-block hidden" id="uploadAvatarField">
     <div class="avatar-block__title">Загрузка фото</div>
 
     <form class="avatar-block__upload">
-      <input type="submit" class="avatar-submit">
+      <div class="avatar-block__uploadCircle">
+        <svg class="photo-icon avatar-block--photo">
+          <use xlink:href="./sprite.svg#photo-icon"></use>
+        </svg>
+      </div>
+      <div class="avatar-block__username">Ник</div>
       <div class="avatar-block__closeBtn">
         <svg class="closeBtn">
           <use xlink:href="./sprite.svg#closeBtn"></use>
@@ -52,19 +58,37 @@
       <div class="avatar-load__nickname"></div>
     </div>
   </div> -->
-  <div class="mainarea" style="display: none;">
+  <div class="mainarea hidden" id="chatField">
     <div class="left">
-      <div class="left__menu-btn">
+      <div class="left__menu-btn" id="uploadAvatar">
         <svg class="menuBtn">
           <use xlink:href="./sprite.svg#menuBtn"></use>
         </svg>
       </div>
+      <div class="left__currentUser">
+        <div class="currentUser__avatar">
+          <img class="profilePhoto__img" src="./morty.jpg" alt="">
+        </div>
+        <div class="currentUser__nickname">Я</div>
+      </div>
+      <div class="left__list">Все пользователи:</div>
       <ul class="chat">
         <li class="chat__item">
-          <div class="chat__profilePhoto"></div>
+          <div class="chat__profilePhoto">
+            <img class="profilePhoto__img" src="./rick.jpg" alt="">
+          </div>
           <div class="chat__txtBlock">
-            <div class="chat__nickname"></div>
-            <div class="chat__msg"></div>
+            <div class="chat__nickname">Рик</div>
+            <div class="chat__msg">Давай, приключение на 20 минут!</div>
+          </div>
+        </li>
+        <li class="chat__item">
+          <div class="chat__profilePhoto">
+            <img class="profilePhoto__img" src="./dude.jpg" alt="">
+          </div>
+          <div class="chat__txtBlock">
+            <div class="chat__nickname">Загадочный мужчина с конвертами</div>
+            <div class="chat__msg">Сыграем?</div>
           </div>
         </li>
       </ul>
@@ -86,6 +110,7 @@
     </div>
   </div>
 
+  <script src="./controller.js"></script>
 
 </body>
 
