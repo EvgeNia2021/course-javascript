@@ -16,6 +16,11 @@ ul {
   list-style-type: none;
 }
 
+img {
+  width: 100%;
+  height: 100%;
+}
+
 button,
 input,
 optgroup,
@@ -264,6 +269,7 @@ textarea {
   display: -ms-inline-flexbox;
   display: inline-flex;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 .avatar-block--photo {
@@ -419,4 +425,84 @@ textarea {
   height: 43px;
   border-radius: 50%;
   overflow: hidden;
+}
+
+.avatar-cut {
+  background: #17212B;
+  width: 364px;
+  height: 452px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 50px;
+  padding: 40px 33px;
+}
+.avatar-cut.hidden {
+  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+}
+.avatar-cut.show {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  overflow: visible;
+}
+
+.avatar-cut__area {
+  width: 284px;
+  height: 308px;
+}
+
+.avatar-cut__instruction {
+  font-weight: 300;
+  font-size: 14px;
+  color: #7F91A4;
+  margin-bottom: 23px;
+}
+
+.avatar-cut__cancelBtn {
+  color: #6BB2F2;
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: transparent;
+  background: transparent;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.avatar-cut__saveBtn {
+  color: #6BB2F2;
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: uppercase;
+  background: #1D2A3A;
+  border: transparent;
+  border-radius: 2px;
+  width: 110px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.avatar-cut__buttons {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }

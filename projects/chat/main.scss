@@ -17,6 +17,11 @@ ul {
   list-style-type: none;
 }
 
+img {
+  width: 100%;
+  height: 100%;
+}
+
 button,
 input,
 optgroup,
@@ -42,14 +47,14 @@ textarea {
     opacity: 0;
     visibility: hidden;
     overflow: hidden;
-}
+  }
 
-&.show {
+  &.show {
     z-index: 1;
     opacity: 1;
     visibility: visible;
     overflow: visible
-}
+  }
 }
 
 .left {
@@ -117,14 +122,16 @@ textarea {
   display: flex;
   margin-bottom: 20px;
 }
+
 .chat__txtBlock {
-margin-left: 20px;
+  margin-left: 20px;
 }
 
 .chat__nickname {
   font-weight: 500;
   color: #5387C1;
 }
+
 .right__messageArea {
   background: #17212B;
   border-left: 2px solid #0E1621;
@@ -207,31 +214,32 @@ margin-left: 20px;
   width: 16px;
   position: absolute;
   left: 92%;
-    top: 7%;
+  top: 7%;
 
 }
 
 .avatar-block {
   width: 364px;
   height: 220px;
-    background: #17212B;
-    position: absolute;
-  
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    
-;
+  background: #17212B;
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  ;
+
   &.hidden {
     display: none;
-}
+  }
 
-&.show {
-  display: block;
-}
+  &.show {
+    display: block;
+  }
 }
 
 .avatar-block__title {
@@ -240,6 +248,7 @@ margin-left: 20px;
   font-weight: 500;
   padding: 35px 32px;
 }
+
 .avatar-block__upload {
   padding: 0 39px;
   display: flex;
@@ -249,25 +258,26 @@ margin-left: 20px;
 .avatar-block__uploadCircle {
   width: 86px;
   height: 86px;
-    position: relative;
-    background: #232F3D;
-    border-radius: 50%;
-    overflow: hidden;
-    display: inline-flex;
-    margin-right: 15px;
+  position: relative;
+  background: #232F3D;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
 .avatar-block--photo {
   position: absolute;
   top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .avatar-block__username {
-font-weight: 500;
-font-size: 18px;
-display: inline-flex;
+  font-weight: 500;
+  font-size: 18px;
+  display: inline-flex;
 }
 
 .closeBtn {
@@ -296,14 +306,14 @@ display: inline-flex;
     opacity: 0;
     visibility: hidden;
     overflow: hidden;
-}
+  }
 
-&.show {
+  &.show {
     z-index: 1;
     opacity: 1;
     visibility: visible;
     overflow: visible
-}
+  }
 }
 
 .auth__image-wrapper {
@@ -383,26 +393,96 @@ display: inline-flex;
 }
 
 .chat__profilePhoto {
-  width: 43px
-  ;
-      height: 43px
-  ;
+  width: 43px;
+  height: 43px;
   border-radius: 50%;
-    overflow: hidden;
-    
+  overflow: hidden;
+
 }
 
 .profilePhoto__img {
   width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    border-radius: 50%; }
-   
-    .currentUser__avatar {
-      width: 43px;
-      height: 43px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
- 
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.currentUser__avatar {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-cut {
+  background: #17212B;
+  width: 364px;
+  height: 452px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 50px;
+  padding: 40px 33px;
+
+  &.hidden {
+    z-index: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+  }
+
+  &.show {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    overflow: visible
+  }
+
+}
+
+.avatar-cut__area {
+  width: 284px;
+  height: 308px;
+}
+
+.avatar-cut__instruction {
+  font-weight: 300;
+  font-size: 14px;
+  color: #7F91A4;
+  margin-bottom: 23px;
+}
+
+.avatar-cut__cancelBtn {
+  color: #6BB2F2;
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: uppercase;
+  border: transparent;
+  background: transparent;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.avatar-cut__saveBtn {
+  color: #6BB2F2;
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: uppercase;
+  background: #1D2A3A;
+  border: transparent;
+  border-radius: 2px;
+  width: 110px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.avatar-cut__buttons {
+  align-self: flex-end;
+}

@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"> -->
   <title>VP-2 Chat</title>
-  <link rel="stylesheet" href="./main.css">
-</head>
+  <!-- <link rel="stylesheet" href="./main.css">
+</head> -->
 
 <body class="clearfix">
 
@@ -26,14 +26,12 @@
       <button class="auth__btn" name="authBtn">Войти</button>
     </form>
   </div>
-  <div class="avatar-block hidden" id="uploadAvatarField">
+  <div class="avatar-block hidden" id="uploadAvatarField" >
     <div class="avatar-block__title">Загрузка фото</div>
 
     <form class="avatar-block__upload">
       <div class="avatar-block__uploadCircle">
-        <svg class="photo-icon avatar-block--photo">
-          <use xlink:href="./sprite.svg#photo-icon"></use>
-        </svg>
+        <img src="./images/default__photo.png" alt="" id="uloadedPhoto">
       </div>
       <div class="avatar-block__username">Ник</div>
       <div class="avatar-block__closeBtn">
@@ -44,11 +42,13 @@
     </form>
   </div>
   <div class="avatar-cut" style="display: none;">
-    <div class="avatar-cut__area"></div>
-    <div class="avatar-cut__instruction"></div>
+    <div class="avatar-cut__area">
+      <img src="" alt="">
+    </div>
+    <div class="avatar-cut__instruction">Область для профильной фотографии</div>
     <div class="avatar-cut__buttons">
-      <button class="avatar-cut__cancelBtn"></button>
-      <button class="avatar-cut__saveBtn"></button>
+      <button class="avatar-cut__cancelBtn">Отмена</button>
+      <button class="avatar-cut__saveBtn">Сохранить</button>
     </div>
   </div>
   <!-- <div class="avatar-load" style="display: none;">
@@ -67,7 +67,7 @@
       </div>
       <div class="left__currentUser">
         <div class="currentUser__avatar">
-          <img class="profilePhoto__img" src="./morty.jpg" alt="">
+          <img class="profilePhoto__img" src="./images/morty.jpg" alt="">
         </div>
         <div class="currentUser__nickname">Я</div>
       </div>
@@ -75,7 +75,7 @@
       <ul class="chat">
         <li class="chat__item">
           <div class="chat__profilePhoto">
-            <img class="profilePhoto__img" src="./rick.jpg" alt="">
+            <img class="profilePhoto__img" src="./images/rick.jpg" alt="">
           </div>
           <div class="chat__txtBlock">
             <div class="chat__nickname">Рик</div>
@@ -84,7 +84,7 @@
         </li>
         <li class="chat__item">
           <div class="chat__profilePhoto">
-            <img class="profilePhoto__img" src="./dude.jpg" alt="">
+            <img class="profilePhoto__img" src="./images/dude.jpg" alt="">
           </div>
           <div class="chat__txtBlock">
             <div class="chat__nickname">Загадочный мужчина с конвертами</div>
@@ -99,7 +99,8 @@
         <div class="right__members"></div>
       </div>
       <div class="right__chatArea">
-
+        <ul class="list-group" id="messageContainer">
+        </ul>
       </div>
       <div class="right__messageArea">
         <div class="right__form">
@@ -113,5 +114,5 @@
   <script src="./controller.js"></script>
 
 </body>
-
-</html>
+<!-- 
+</html> -->
