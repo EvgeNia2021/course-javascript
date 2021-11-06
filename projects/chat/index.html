@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="UTF-8"> -->
-  <title>VP-2 Chat</title>
-  <!-- <link rel="stylesheet" href="./main.css">
+<title>VP-2 Chat</title>
+<!-- <link rel="stylesheet" href="./main.css">
 </head> -->
 
-<body class="clearfix">
+<div id="app">
 
   <div class="auth" id="auth">
     <div class="auth__image-wrapper">
@@ -21,44 +21,45 @@
     <div class="auth__instruction">Введите пожалуйста свой ник для дальнейшей авторизации</div>
     <form class="auth__form" name="authForm">
       <div class="reg__container">
-        <input type="text" name="nickName" class="auth__form-input" placeholder="Ведите свой ник">
+        <input type="text" name="nickName" class="auth__form-input" id="input__name" placeholder="Введите свой ник">
       </div>
-      <button class="auth__btn" name="authBtn">Войти</button>
+      <button class="auth__btn" name="authBtn" id="authBtn">Войти</button>
     </form>
   </div>
-  <div class="avatar-block hidden" id="uploadAvatarField" >
-    <div class="avatar-block__title">Загрузка фото</div>
+  <div class="mainarea hidden" id="chatField">
+    <div class="avatar-block hidden" id="uploadAvatarField">
+      <div class="avatar-block__title">Загрузка фото</div>
 
-    <form class="avatar-block__upload">
-      <div class="avatar-block__uploadCircle">
-        <img src="./images/default__photo.png" alt="" id="uloadedPhoto">
-      </div>
-      <div class="avatar-block__username">Ник</div>
-      <div class="avatar-block__closeBtn">
-        <svg class="closeBtn">
-          <use xlink:href="./sprite.svg#closeBtn"></use>
-        </svg>
-      </div>
-    </form>
-  </div>
-  <div class="avatar-cut" style="display: none;">
-    <div class="avatar-cut__area">
-      <img src="" alt="">
+      <form class="avatar-block__upload">
+        <div class="avatar-block__uploadCircle">
+          <img src="./images/default__photo.png" alt="" id="uloadedPhoto">
+        </div>
+        <div class="avatar-block__username">Ник</div>
+        <div class="avatar-block__closeBtn">
+          <svg class="closeBtn">
+            <use xlink:href="./sprite.svg#closeBtn"></use>
+          </svg>
+        </div>
+      </form>
     </div>
-    <div class="avatar-cut__instruction">Область для профильной фотографии</div>
-    <div class="avatar-cut__buttons">
-      <button class="avatar-cut__cancelBtn">Отмена</button>
-      <button class="avatar-cut__saveBtn">Сохранить</button>
+    <div class="avatar-cut" style="display: none;">
+      <div class="avatar-cut__area">
+        <img src="" alt="">
+      </div>
+      <div class="avatar-cut__instruction">Область для профильной фотографии</div>
+      <div class="avatar-cut__buttons">
+        <button class="avatar-cut__cancelBtn">Отмена</button>
+        <button class="avatar-cut__saveBtn">Сохранить</button>
+      </div>
     </div>
-  </div>
-  <!-- <div class="avatar-load" style="display: none;">
+    <!-- <div class="avatar-load" style="display: none;">
     <div class="avatar-load__title"></div>
     <div class="avatar-load__block">
       <div class="avatar-load__img"></div>
       <div class="avatar-load__nickname"></div>
     </div>
   </div> -->
-  <div class="mainarea hidden" id="chatField">
+
     <div class="left">
       <div class="left__menu-btn" id="uploadAvatar">
         <svg class="menuBtn">
@@ -66,32 +67,15 @@
         </svg>
       </div>
       <div class="left__currentUser">
-        <div class="currentUser__avatar">
-          <img class="profilePhoto__img" src="./images/morty.jpg" alt="">
-        </div>
-        <div class="currentUser__nickname">Я</div>
+        <div class="user-photo" data-role="user-photo"></div>
+        <div class="user-name" data-role="user-name"></div>
       </div>
-      <div class="left__list">Все пользователи:</div>
-      <ul class="chat">
-        <li class="chat__item">
-          <div class="chat__profilePhoto">
-            <img class="profilePhoto__img" src="./images/rick.jpg" alt="">
-          </div>
-          <div class="chat__txtBlock">
-            <div class="chat__nickname">Рик</div>
-            <div class="chat__msg">Давай, приключение на 20 минут!</div>
-          </div>
-        </li>
-        <li class="chat__item">
-          <div class="chat__profilePhoto">
-            <img class="profilePhoto__img" src="./images/dude.jpg" alt="">
-          </div>
-          <div class="chat__txtBlock">
-            <div class="chat__nickname">Загадочный мужчина с конвертами</div>
-            <div class="chat__msg">Сыграем?</div>
-          </div>
-        </li>
-      </ul>
+      <div class="left__user-list"></div>
+      <div class="user-list-header">
+        Все пользователи:
+      </div>
+      <div class="user-list" data-role="user-list">
+      </div>
     </div>
     <div class="right">
       <div class="right__header">
@@ -113,6 +97,6 @@
 
   <script src="./controller.js"></script>
 
-</body>
+</div>
 <!-- 
 </html> -->

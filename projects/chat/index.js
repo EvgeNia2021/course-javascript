@@ -1,13 +1,10 @@
 import './index.html';
 import './main.css';
+import './sprite.svg';
+import './client';
 
 
 
-
-
-// const Model = require('./model.js');
-// const View = require('./view.js');
-// const Controller = require('./controller');
 
 
 
@@ -85,65 +82,4 @@ uploadAvatarBtn.addEventListener('click', function(e){
 });
 
 
-
-
-///web socket
-
-// const WebSocketServer = new require('./websocket');
- 
-// var clients = {};
-// let currentId = 1;
- 
-// const webSocketServer = new WebSocketServer.Server({port: 8080});
- 
-// webSocketServer.on('connection', function(ws) {
-//     const id = currentId++;
-//     clients[id] = ws;
-//     console.log("новое соединение " + id);
- 
-//     ws.on('message', function(message) {
-//         console.log('получено сообщение ' + message);
-//         for(const key in clients) {
-//             clients[key].send(message.toString());
-//         }
-//     });
- 
-//     ws.on('close', function() {
-//         console.log('соединение закрыто ' + id);
-//         delete clients[id];
-//     });
-// });
-// console.log("Сервер запущен на порту 8080");
-
-
-const socket = new WebSocket("ws://localhost:8080");
-const messageText = document.querySelector('#messageInput');
-const sendButton = document.querySelector('#sendMsg');
-const messageContainer = document.querySelector('#messageContainer');
-
-socket.addEventListener('message', function (event) {
-    addMessage(event.data);
-});
-
-socket.addEventListener('error', function() {
-    alert('Соединение закрыто или не может быть открыто');
-});
-
-function addMessage(message) {
-    const messageItem = document.createElement('li');
-
-    messageItem.className = "list-group-item";
-    messageItem.textContent = message;
-
-    messageContainer.appendChild(messageItem);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-}
-
-function sendMessage() {
-    socket.send(messageText.value);
-    messageText.value = '';
-}
-
-sendButton.addEventListener('click', sendMessage);
-messageText.addEventListener('change', sendMessage);
 
