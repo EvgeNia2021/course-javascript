@@ -1,20 +1,9 @@
 import './index.html';
 import './main.css';
-import './sprite.svg';
 import './client';
 
 
 
-
-
-
-
-let self = null; 
-let usersList = []; 
-let usersAvatars = new Map();
-let webSocket = null; 
-
-let messageFromServer = {}; 
  
 
 
@@ -47,6 +36,7 @@ authButton.addEventListener('click', event => {
         //workServer(); 
         showField(chatField);
         hideField(authFormDisplay);
+        //usersAvatars.push(user);
     }
 });
 
@@ -73,12 +63,20 @@ const uploadAvatarField = document.querySelector('#uploadAvatarField');
 const newAvatarFile = "";
 const newAvatarSubmitBtn = document.querySelector('.new-avatar__form-submit');
 
-uploadAvatarBtn.addEventListener('click', function(e){
 
+
+uploadAvatarBtn.addEventListener('click', (e) =>  {
+  const avatarBlock = document.querySelector(".avatar-block");
   e.preventDefault();
-  showField(uploadAvatarField);
 
- 
+  if (avatarBlock.classList.contains("hidden")) {
+    showField(uploadAvatarField);
+  } else {
+    hideField(uploadAvatarField);
+  }
+  
+
+
 });
 
 

@@ -11,10 +11,10 @@
 
   <div class="auth" id="auth">
     <div class="auth__image-wrapper">
-
-      <svg class="photo-icon">
+<div class="auth-icon"></div>
+      <!-- <svg class="photo-icon">
         <use xlink:href="./sprite.svg#photo-icon"></use>
-      </svg>
+      </svg> -->
 
     </div>
     <div class="auth__title">Авторизация</div>
@@ -31,9 +31,9 @@
       <div class="avatar-block__title">Загрузка фото</div>
 
       <form class="avatar-block__upload">
-        <div class="avatar-block__uploadCircle">
+        <input type="file" class="avatar-block__uploadCircle" id="photoInput"> 
           <img src="./images/default__photo.png" alt="" id="uloadedPhoto">
-        </div>
+        </input>
         <div class="avatar-block__username">Ник</div>
         <div class="avatar-block__closeBtn">
           <svg class="closeBtn">
@@ -62,9 +62,9 @@
 
     <div class="left">
       <div class="left__menu-btn" id="uploadAvatar">
-        <svg class="menuBtn">
+        <!-- <svg class="menuBtn">
           <use xlink:href="./sprite.svg#menuBtn"></use>
-        </svg>
+        </svg> -->
       </div>
       <div class="left__currentUser">
         <div class="user-photo" data-role="user-photo"></div>
@@ -74,17 +74,17 @@
       <div class="user-list-header">
         Все пользователи:
       </div>
-      <div class="user-list" data-role="user-list">
+      <div class="user-list" id="user-list">
       </div>
     </div>
     <div class="right">
       <div class="right__header">
         <div class="right__title">Чат</div>
-        <div class="right__members"></div>
+        <div class="number-of-members" id="numberOfMembers"></div>
       </div>
-      <div class="right__chatArea">
-        <ul class="list-group" id="messageContainer">
-        </ul>
+      <div class="right__chatArea" id="messageContainer">
+        <!-- <ul class="list-group" >
+        </ul> -->
       </div>
       <div class="right__messageArea">
         <div class="right__form">
