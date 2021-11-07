@@ -2,7 +2,7 @@ const { Server } = require('ws');
 const { v4: uuidv4 } = require('uuid');
 
 const wss = new Server({ port: 8000 })
-//const clients = new Map();
+
 
 
 
@@ -10,6 +10,19 @@ const actions = {
     'user:connect': function ({ user }) {
         user.id = uuidv4()
         this.user = user
+        console.log(Array.from(wss.clients).map(ws => ws.user))
+        this.send(JSON.stringify({
+            action: 'user:list',
+            data: {
+                users: Array.from(wss.clients).map(ws => ws.user).filter(client => {
+
+                    if (client) return client.id != user.id
+
+                    return false
+                }),
+                userId: user.id
+            }
+        }))
 
         broadcast({
             action: 'user:connect',
@@ -40,10 +53,9 @@ const actions = {
 }
 
 
-CLIENTS=[];
+
 wss.on('connection', (ws) => {
-    CLIENTS.push(ws);
-    //wss.clients.set(ws, metadata);
+
     console.log('connect')
     ws.on('message', (message) => {
         const { action, data } = JSON.parse(message)
@@ -52,10 +64,7 @@ wss.on('connection', (ws) => {
 
     })
 
-    ws.on('close', (ws) => {
-        // wss.clients.removeClient(user.nickName.toLowerCase());        
-        actions['user:leave']
-    })
+    ws.on('close', actions['user:leave'])
 
 
 

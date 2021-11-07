@@ -37,17 +37,7 @@ textarea {
 }
 
 input[type=file] {
-  border: none;
-  background: none;
-  outline: none;
-  padding: 0;
-  -webkit-appearance: none;
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+  display: none;
 }
 
 element {

@@ -8,7 +8,17 @@ const numberOfMembers = document.querySelector('#numberOfMembers')
 const userList = document.querySelector('#user-list');
 
 
-  
+const proxyUsers = new Proxy({ users: [] }, {
+    set(target, prop, value) {
+        target[prop] = value;
+        numberOfMembers.textContent = target.users.length
+        userList.innerHTML = target.users.reduce((prev, user) => {
+            return prev + `<div data-id="${user.id}"> ${user.name} </div>`
+        }, "")
+        return true
+    }
+});
+
 
 
 
@@ -17,8 +27,8 @@ const userList = document.querySelector('#user-list');
 authButton.addEventListener('click', () => {
     const InputName = document.querySelector("#input__name");
     const name = InputName.value;
-  
-    
+
+
 
 
     ws.send(JSON.stringify({
@@ -26,7 +36,7 @@ authButton.addEventListener('click', () => {
         data: {
             user: {
                 name
-                
+
             }
         }
     }))
@@ -37,7 +47,7 @@ button.addEventListener('click', () => {
     const message = InputMessage.value;
     InputMessage.value = "";
 
-    
+
 
 
     ws.send(JSON.stringify({
@@ -52,52 +62,51 @@ button.addEventListener('click', () => {
 
 
 const actions = {
-    'user:connect': function({ user }) {
+    'user:connect': function ({ user }) {
         const template = `
             <div class="message message_bot" data-id="${user.id}">
                 Пользователь вошёл в чат: ${user.name}
             </div>
          `
-         const template2 = `
-            <div class="user-list-item" data-id="${user.id}">
-             ${user.name}
-            </div>
-         `
-      
-        
-         container.innerHTML += template
-         userList.innerHTML += user + "<br>"
-        //  var ul = "";
-        // for (i=0; i < message.users.length; i++) {
-        //   ul += message.users[i] + "<br>";
-        // }
-        // document.getElementById("user-list").innerHTML = ul;
-         
-  
+
+
+        container.innerHTML += template
+
+        proxyUsers.users = [...proxyUsers.users, user]
     },
-    'user:leave': function({ user }) {
+    'user:leave': function ({ user }) {
         const template = `
         <div class="message message_bot" data-id="${user.id}">
             Пользователь покинул чат: ${user.name}
         </div>
      `
 
-     container.innerHTML += template
-     //userList.innerHTML = "";
-    
-     
+        const deleteUser = document.querySelector(`[data-id="${user.id}"]`)
+        if (deleteUser) {
+            userList.removeChild(deleteUser)
+        }
+        container.innerHTML += template
+
+        proxyUsers.users = proxyUsers.users.filter(client => client.id != user.id)
+
     },
-    'message:add': function({ message }) {
-        
+    'message:add': function ({ message }) {
+
         const template = `
         <div class="message" data-id="${message.user.id}">
         <b>${message.user.name}:</b> ${message.text}
         </div>
      `
 
-     container.innerHTML += template
-    }
-    
+        container.innerHTML += template
+    },
+
+    'user:list': function ({ users, userId }) {
+        proxyUsers.users = [...users]
+
+
+    },
+
 }
 
 // ws.addEventListener('open', () => {
@@ -116,9 +125,9 @@ const actions = {
 // })
 
 ws.addEventListener('message', (message) => {
-   const { action, data } = JSON.parse(message.data)
+    const { action, data } = JSON.parse(message.data)
 
-   actions[action](data)
+    actions[action](data)
 })
 
 
@@ -131,23 +140,23 @@ ws.addEventListener('message', (message) => {
 //     if (options.targetSocket) {
 //       return options.targetSocket.send(JSON.stringify(eventData));
 //     }
-  
+
 //     return socketServer.clients.forEach(socket => socket.send(JSON.stringify(eventData)));
 //   }
-ws.onmessage = function(event) {
-    
+ws.onmessage = function (event) {
+
     var msg = JSON.parse(event.data);
-  
-  
-    switch(msg.type) {
-      
-      case "userlist":
-        var ul = "";
-        for (i=0; i < msg.users.length; i++) {
-          ul += msg.users[i] + "<br>";
-        }
-        document.getElementById("user-list").innerHTML = ul;
-        break;
+
+
+    switch (msg.type) {
+
+        case "userlist":
+            var ul = "";
+            for (i = 0; i < msg.users.length; i++) {
+                ul += msg.users[i] + "<br>";
+            }
+            document.getElementById("user-list").innerHTML = ul;
+            break;
     }
-  
-  };
+
+};

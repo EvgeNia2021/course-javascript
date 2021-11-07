@@ -11,7 +11,7 @@
 
   <div class="auth" id="auth">
     <div class="auth__image-wrapper">
-<div class="auth-icon"></div>
+      <div class="auth-icon"></div>
       <!-- <svg class="photo-icon">
         <use xlink:href="./sprite.svg#photo-icon"></use>
       </svg> -->
@@ -31,9 +31,10 @@
       <div class="avatar-block__title">Загрузка фото</div>
 
       <form class="avatar-block__upload">
-        <input type="file" class="avatar-block__uploadCircle" id="photoInput"> 
-          <img src="./images/default__photo.png" alt="" id="uloadedPhoto">
-        </input>
+        <label class="avatar-block__uploadCircle">
+          <input type="file" id="photoInput">
+          <!-- <img src="./images/default__photo.png" alt="" id="uloadedPhoto"> -->
+          </input></label>
         <div class="avatar-block__username">Ник</div>
         <div class="avatar-block__closeBtn">
           <svg class="closeBtn">
