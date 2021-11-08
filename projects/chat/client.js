@@ -5,7 +5,13 @@ const container = document.querySelector('#messageContainer')
 const button = document.querySelector('#sendMsg')
 const authButton = document.querySelector('#authBtn')
 const numberOfMembers = document.querySelector('#numberOfMembers')
-const userList = document.querySelector('#user-list');
+const userList = document.querySelector('#user-list')
+const userPhotoInput = document.querySelector('#photoInput');
+const theImage = document.querySelector(".upload-avatar-image");
+const messageInput = document.querySelector('#messageInput');
+
+
+
 
 
 const proxyUsers = new Proxy({ users: [] }, {
@@ -13,14 +19,60 @@ const proxyUsers = new Proxy({ users: [] }, {
         target[prop] = value;
         numberOfMembers.textContent = target.users.length
         userList.innerHTML = target.users.reduce((prev, user) => {
-            return prev + `<div data-id="${user.id}"> ${user.name} </div>`
+            return prev + `<div class="chat-list-container" data-id="${user.id}"><div class="user-photo-container"> <img src="" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${user.id}"></div><div> ${user.name} </div></div>`
         }, "")
         return true
     }
 });
 
 
+// const date = new Date();
+// const hours = String(date.getHours()).padStart(2, 0);
+// const minutes = String(date.getMinutes()).padStart(2, 0);
+// const time = `${hours}:${minutes}`;
 
+var today = new Date();
+var time = today.getHours() + ":" + today.getMinutes();
+
+
+
+userPhotoInput.addEventListener('change', (e) => {
+   
+    
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+  
+    if (file) {
+        if (file.size > 500 * 1024) {
+            alert('Слишком большой файл');
+        }
+        if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+  
+            alert('Можно загружать только JPEG и PNG-файлы');
+        }
+        else {
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                theImage.src = reader.result;
+                console.log(reader.result)
+            }
+        }
+    }
+    const imageSrc = reader.result;
+
+    
+    ws.send(JSON.stringify({
+        action: 'user:photo',
+        data: {
+            user: {
+                imageSrc
+
+            }
+        }
+    }))
+  });
+  
 
 
 
@@ -42,6 +94,7 @@ authButton.addEventListener('click', () => {
     }))
 })
 
+
 button.addEventListener('click', () => {
     const InputMessage = document.querySelector("#messageInput");
     const message = InputMessage.value;
@@ -59,6 +112,29 @@ button.addEventListener('click', () => {
         }
     }))
 })
+
+messageInput.addEventListener('keydown', event => {
+    const InputMessage = document.querySelector("#messageInput");
+    const message = InputMessage.value;
+    
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        
+           InputMessage.value = ""; 
+            ws.send(JSON.stringify({
+                action: 'message:add',
+                data: {
+                    message: {
+                        text: message
+                    }
+                }
+            }))
+    
+        
+     
+}
+
+});
 
 
 const actions = {
@@ -91,38 +167,37 @@ const actions = {
 
     },
     'message:add': function ({ message }) {
+        
 
         const template = `
-        <div class="message" data-id="${message.user.id}">
-        <b>${message.user.name}:</b> ${message.text}
-        </div>
+        <div class="chat-message-container"><div class="user-photo-container"><img src="" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${message.user.id}"></div><div class="message" data-id="${message.user.id}">
+        <b>${message.user.name}</b> ${message.text}     ${time}
+        </div></div>
      `
 
         container.innerHTML += template
     },
 
-    'user:list': function ({ users, userId }) {
+    'user:list': function ({ users, userId, messageArr }) {
         proxyUsers.users = [...users]
+       //container.forEach((n, i) => n.textContent = messageArr[i])
+    //    messageArr.slice(0, 100).map((i) => {
+      
+    //   });
 
+
+    },
+    'user:photo': function ({ imageSrc }) {
+        
+        const allAvatars = document.querySelectorAll('[data-role=user-photo][data-id="${user.id}"]')
+        allAvatars.src = imageSrc
+        
 
     },
 
 }
 
-// ws.addEventListener('open', () => {
-//     console.log('open ws connection')
-// const InputName = document.querySelector("#input__name");
-//     const name = InputName.value;
 
-//     ws.send(JSON.stringify({
-//         action: 'user:connect',
-//         data: {
-//             user: {
-//                 name
-//             }
-//         }
-//     }))
-// })
 
 ws.addEventListener('message', (message) => {
     const { action, data } = JSON.parse(message.data)
@@ -131,32 +206,5 @@ ws.addEventListener('message', (message) => {
 })
 
 
-// function emitUpdate(eventData, options = {}) {
-//     if (options.excludeSocket) {
-//       return socketServer.clients.forEach(socket => {
-//         if (socket !== options.excludeSocket) socket.send(JSON.stringify(eventData));
-//       });
-//     }
-//     if (options.targetSocket) {
-//       return options.targetSocket.send(JSON.stringify(eventData));
-//     }
-
-//     return socketServer.clients.forEach(socket => socket.send(JSON.stringify(eventData)));
-//   }
-ws.onmessage = function (event) {
-
-    var msg = JSON.parse(event.data);
 
 
-    switch (msg.type) {
-
-        case "userlist":
-            var ul = "";
-            for (i = 0; i < msg.users.length; i++) {
-                ul += msg.users[i] + "<br>";
-            }
-            document.getElementById("user-list").innerHTML = ul;
-            break;
-    }
-
-};

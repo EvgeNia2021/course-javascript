@@ -11,7 +11,7 @@ const authFormDisplay = document.querySelector('#auth');
 const authForm = document.forms.authForm;
 const authButton = authForm.authBtn;
 const chatField = document.querySelector('#chatField');
-
+const closeBtn = document.querySelector('#closeBtn')
 
 function start() {
   showField(authFormDisplay);
@@ -62,10 +62,26 @@ const uploadAvatarBtn = document.querySelector('#uploadAvatar');
 const uploadAvatarField = document.querySelector('#uploadAvatarField');
 const newAvatarFile = "";
 const newAvatarSubmitBtn = document.querySelector('.new-avatar__form-submit');
+const messageTime = 
 
 
 
 uploadAvatarBtn.addEventListener('click', (e) => {
+  const avatarBlock = document.querySelector(".avatar-block");
+  e.preventDefault();
+
+  if (avatarBlock.classList.contains("hidden")) {
+    showField(uploadAvatarField);
+  } else {
+    hideField(uploadAvatarField);
+  }
+
+
+
+});
+
+
+closeBtn.addEventListener('click', (e) => {
   const avatarBlock = document.querySelector(".avatar-block");
   e.preventDefault();
 
