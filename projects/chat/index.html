@@ -32,17 +32,19 @@
 
       <form class="avatar-block__upload">
         <label class="avatar-block__uploadCircle">
-          <img src="" alt="" class="upload-avatar-image" data-role="user-photo">
+          <img src="" alt="" class="upload-avatar-image" data-role="user-photo" id="dragArea">
           <input type="file" id="photoInput">
           <!-- <img src="./images/default__photo.png" alt="" id="uloadedPhoto"> -->
           </input></label>
-        <div class="avatar-block__username">Ник</div>
+        <div class="avatar-block__username" id="avatarBlockUsername">Ник</div>
         <div class="avatar-block__closeBtn" id="closeBtn">
           <!-- <svg class="closeBtn">
             <use xlink:href="./sprite.svg#closeBtn"></use>
           </svg> -->
         </div>
       </form>
+      <div class="avatar-save-btn"><button class="avatar-cut__saveBtn" id="saveBtn">Сохранить</button></div>
+      
     </div>
     <div class="avatar-cut" style="display: none;">
       <div class="avatar-cut__area">

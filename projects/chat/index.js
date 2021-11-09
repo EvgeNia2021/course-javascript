@@ -11,7 +11,9 @@ const authFormDisplay = document.querySelector('#auth');
 const authForm = document.forms.authForm;
 const authButton = authForm.authBtn;
 const chatField = document.querySelector('#chatField');
-const closeBtn = document.querySelector('#closeBtn')
+const closeBtn = document.querySelector('#closeBtn');
+const savePhotoBtn = document.querySelector('#saveBtn');
+const button = document.querySelector('#sendMsg')
 
 function start() {
   showField(authFormDisplay);
@@ -43,8 +45,10 @@ authButton.addEventListener('click', event => {
 function showField(field) {
   if (field.classList.contains('hidden')) {
     field.classList.remove('hidden');
+    
     if (!field.classList.contains('show')) {
       field.classList.add('show');
+     
     }
   }
 }
@@ -95,5 +99,17 @@ closeBtn.addEventListener('click', (e) => {
 
 });
 
+savePhotoBtn.addEventListener('click', (e) => {
+  const avatarBlock = document.querySelector(".avatar-block");
+  e.preventDefault();
 
+  if (avatarBlock.classList.contains("hidden")) {
+    showField(uploadAvatarField);
+  } else {
+    hideField(uploadAvatarField);
+  }
+
+
+
+});
 

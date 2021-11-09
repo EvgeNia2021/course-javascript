@@ -43,7 +43,7 @@ const actions = {
     'message:add': function ({ message }) {
         
         messageArr.push(message)
-        console.log(messageArr)
+        
 
         broadcast({
             action: 'message:add',
@@ -57,6 +57,7 @@ const actions = {
         })
     },
     'user:photo': function ({ imageSrc }) {
+        console.log(imageSrc)
         broadcast({
             action: 'user:photo',
             data: {

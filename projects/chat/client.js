@@ -9,8 +9,10 @@ const userList = document.querySelector('#user-list')
 const userPhotoInput = document.querySelector('#photoInput');
 const theImage = document.querySelector(".upload-avatar-image");
 const messageInput = document.querySelector('#messageInput');
+const avatarBlockUsername = document.querySelector('#avatarBlockUsername');
+const savePhotoBtn = document.querySelector('#saveBtn');
 
-
+const dragArea = document.querySelector('#dragArea');
 
 
 
@@ -37,18 +39,18 @@ var time = today.getHours() + ":" + today.getMinutes();
 
 
 userPhotoInput.addEventListener('change', (e) => {
-   
-    
+
+
     const file = e.target.files[0];
     const reader = new FileReader();
-    
-  
+
+
     if (file) {
         if (file.size > 500 * 1024) {
             alert('Слишком большой файл');
         }
         if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-  
+
             alert('Можно загружать только JPEG и PNG-файлы');
         }
         else {
@@ -61,7 +63,7 @@ userPhotoInput.addEventListener('change', (e) => {
     }
     const imageSrc = reader.result;
 
-    
+
     ws.send(JSON.stringify({
         action: 'user:photo',
         data: {
@@ -71,8 +73,57 @@ userPhotoInput.addEventListener('change', (e) => {
             }
         }
     }))
-  });
-  
+});
+
+dragArea.addEventListener('dragover', (e) => {
+    if (e.dataTransfer.items.length && e.dataTransfer.items[0].kind === 'file') {
+        e.preventDefault();
+    }
+});
+
+dragArea.addEventListener('drop', (e) => {
+    const dragFile = e.dataTransfer.items[0].getAsFile();
+    const dragReader = new FileReader();
+    e.preventDefault();
+    if (dragFile) {
+        if (dragFile.size > 500 * 1024) {
+            alert('Слишком большой файл');
+        }
+        if (dragFile.type !== 'image/jpeg' && dragFile.type !== 'image/png') {
+
+            alert('Можно загружать только JPEG и PNG-файлы');
+        }
+        else {
+
+
+            dragReader.readAsDataURL(dragFile);
+            dragReader.onload = () => {
+                theImage.src = dragReader.result;
+
+            }
+        }
+    }
+
+
+
+
+});
+savePhotoBtn.addEventListener('click', () => {
+
+    const imageSrc = theImage.src;
+    ws.send(JSON.stringify({
+        action: 'user:photo',
+        data: {
+            user: {
+                text: imageSrc
+                
+            }
+        }
+    }))
+    console.log(imageSrc);
+})
+
+
 
 
 
@@ -103,6 +154,7 @@ button.addEventListener('click', () => {
 
 
 
+
     ws.send(JSON.stringify({
         action: 'message:add',
         data: {
@@ -116,23 +168,23 @@ button.addEventListener('click', () => {
 messageInput.addEventListener('keydown', event => {
     const InputMessage = document.querySelector("#messageInput");
     const message = InputMessage.value;
-    
+
     if (event.keyCode === 13) {
         event.preventDefault();
-        
-           InputMessage.value = ""; 
-            ws.send(JSON.stringify({
-                action: 'message:add',
-                data: {
-                    message: {
-                        text: message
-                    }
+
+        InputMessage.value = "";
+        ws.send(JSON.stringify({
+            action: 'message:add',
+            data: {
+                message: {
+                    text: message
                 }
-            }))
-    
-        
-     
-}
+            }
+        }))
+
+
+
+    }
 
 });
 
@@ -149,6 +201,8 @@ const actions = {
         container.innerHTML += template
 
         proxyUsers.users = [...proxyUsers.users, user]
+        avatarBlockUsername.textContent = `${user.name}`
+
     },
     'user:leave': function ({ user }) {
         const template = `
@@ -167,7 +221,7 @@ const actions = {
 
     },
     'message:add': function ({ message }) {
-        
+
 
         const template = `
         <div class="chat-message-container"><div class="user-photo-container"><img src="" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${message.user.id}"></div><div class="message" data-id="${message.user.id}">
@@ -176,22 +230,23 @@ const actions = {
      `
 
         container.innerHTML += template
+        container.scrollTop = container.scrollHeight
     },
 
     'user:list': function ({ users, userId, messageArr }) {
         proxyUsers.users = [...users]
-       //container.forEach((n, i) => n.textContent = messageArr[i])
-    //    messageArr.slice(0, 100).map((i) => {
-      
-    //   });
+        //container.forEach((n, i) => n.textContent = messageArr[i])
+        //    messageArr.slice(0, 100).map((i) => {
+
+        //   });
 
 
     },
     'user:photo': function ({ imageSrc }) {
-        
-        const allAvatars = document.querySelectorAll('[data-role=user-photo][data-id="${user.id}"]')
-        allAvatars.src = imageSrc
-        
+
+        const allAvatars = document.querySelectorAll(`[data-role=user-photo][data-id="${user.id}"]`)
+        allAvatars.src = `${imageSrc}`
+
 
     },
 

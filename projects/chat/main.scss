@@ -100,12 +100,13 @@ element {
 
 .right__header {
   background: #17212B;
-  height: 10%;
+  height: 7%;
   width: 100%;
   border-left: 2px solid #0E1621;
   display: flex;
   flex-direction: column;
-    padding: 15px 20px;
+  padding: 15px 20px;
+  justify-content: space-between;
 
 }
 
@@ -114,6 +115,7 @@ element {
   width: 100%;
   height: 80%;
   padding: 15px;
+  overflow-y: hidden;
 }
 
 .user-list-header {
@@ -256,6 +258,7 @@ element {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding: 15px;
 
   ;
 
@@ -272,13 +275,15 @@ element {
   color: #FFFFFF;
   font-size: 18px;
   font-weight: 500;
-  padding: 35px 32px;
+  padding: 0 32px;
+  margin-bottom: 30px;
 }
 
 .avatar-block__upload {
   padding: 0 39px;
   display: flex;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .avatar-block__uploadCircle {
@@ -502,6 +507,10 @@ element {
   margin-right: 20px;
 }
 
+.avatar-save-btn {
+float: right;
+}
+
 .avatar-cut__saveBtn {
   color: #6BB2F2;
   font-weight: 400;
@@ -520,12 +529,12 @@ element {
 }
 
 .user-photo-chat {
- 
+
   // background: url(./images/default__photo.png);
-  
+
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
@@ -535,7 +544,7 @@ element {
   margin-right: 10px;
   width: 33px;
   height: 33px;
-  
+
   border-radius: 50%;
   overflow: hidden;
   border: 1px solid transparent;
@@ -548,7 +557,7 @@ element {
 }
 
 .message_bot {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .chat-list-container {
@@ -558,7 +567,7 @@ margin-bottom: 10px;
 .upload-avatar-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
