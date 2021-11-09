@@ -6,6 +6,13 @@ const wss = new Server({ port: 8000 })
 const messageArr = []
 
 
+function getTime() {
+    var today = new Date();
+    var time = today.getHours() + ":" + today.getMinutes();
+    return time;
+    }
+
+    
 const actions = {
     'user:connect': function ({ user }) {
         user.id = uuidv4()
@@ -20,7 +27,7 @@ const actions = {
 
                     return false
                 }),
-                
+                messages: messageArr.slice(0, 100)
             }
         }))
 
@@ -41,28 +48,29 @@ const actions = {
         })
     },
     'message:add': function ({ message }) {
-        
-        messageArr.push(message)
-        
+        this.user.lastMessage = message
+        const mess = {
+            text: message.text,
+            user: this.user,
+            time: getTime()
+        }
+        messageArr.push(mess)
+
 
         broadcast({
             action: 'message:add',
             data: {
-                message: {
-                    text: message.text,
-                    user: this.user
-                },
-                
+                message: mess
             }
         })
     },
-    'user:photo': function ({ imageSrc }) {
-        console.log(imageSrc)
+    'user:photo': function ({ photo }) {
+        this.user.photo = photo
         broadcast({
             action: 'user:photo',
             data: {
-                imageSrc,
-                 user: this.user
+                photo,
+                userId: this.user.id
             }
         })
     }

@@ -21,7 +21,7 @@ const proxyUsers = new Proxy({ users: [] }, {
         target[prop] = value;
         numberOfMembers.textContent = target.users.length
         userList.innerHTML = target.users.reduce((prev, user) => {
-            return prev + `<div class="chat-list-container" data-id="${user.id}"><div class="user-photo-container"> <img src="" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${user.id}"></div><div> ${user.name} </div></div>`
+            return prev + `<div class="chat-list-container" data-id="${user.id}"><div class="user-photo-container"> <img src="${user.photo}" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${user.id}"></div><div> ${user.name} <span>${user.lastMessage?user.lastMessage:""}</span>  </div></div>`
         }, "")
         return true
     }
@@ -32,10 +32,6 @@ const proxyUsers = new Proxy({ users: [] }, {
 // const hours = String(date.getHours()).padStart(2, 0);
 // const minutes = String(date.getMinutes()).padStart(2, 0);
 // const time = `${hours}:${minutes}`;
-
-var today = new Date();
-var time = today.getHours() + ":" + today.getMinutes();
-
 
 
 userPhotoInput.addEventListener('change', (e) => {
@@ -56,72 +52,69 @@ userPhotoInput.addEventListener('change', (e) => {
         else {
             reader.readAsDataURL(file);
             reader.onload = () => {
-                theImage.src = reader.result;
-                console.log(reader.result)
-            }
-        }
-    }
-    const imageSrc = reader.result;
+                const photo = reader.result;
+                theImage.src = photo;
 
 
-    ws.send(JSON.stringify({
-        action: 'user:photo',
-        data: {
-            user: {
-                imageSrc
-
-            }
-        }
-    }))
-});
-
-dragArea.addEventListener('dragover', (e) => {
-    if (e.dataTransfer.items.length && e.dataTransfer.items[0].kind === 'file') {
-        e.preventDefault();
-    }
-});
-
-dragArea.addEventListener('drop', (e) => {
-    const dragFile = e.dataTransfer.items[0].getAsFile();
-    const dragReader = new FileReader();
-    e.preventDefault();
-    if (dragFile) {
-        if (dragFile.size > 500 * 1024) {
-            alert('Слишком большой файл');
-        }
-        if (dragFile.type !== 'image/jpeg' && dragFile.type !== 'image/png') {
-
-            alert('Можно загружать только JPEG и PNG-файлы');
-        }
-        else {
-
-
-            dragReader.readAsDataURL(dragFile);
-            dragReader.onload = () => {
-                theImage.src = dragReader.result;
-
+                ws.send(JSON.stringify({
+                    action: 'user:photo',
+                    data: {
+                        photo
+                    }
+                }))
             }
         }
     }
 
-
-
-
 });
-savePhotoBtn.addEventListener('click', () => {
 
-    const imageSrc = theImage.src;
-    ws.send(JSON.stringify({
-        action: 'user:photo',
-        data: {
-            user: {
-                text: imageSrc
-                
-            }
-        }
-    }))
-    console.log(imageSrc);
-})
+// dragArea.addEventListener('dragover', (e) => {
+//     if (e.dataTransfer.items.length && e.dataTransfer.items[0].kind === 'file') {
+//         e.preventDefault();
+//     }
+// });
+
+// dragArea.addEventListener('drop', (e) => {
+//     const dragFile = e.dataTransfer.items[0].getAsFile();
+//     const dragReader = new FileReader();
+//     e.preventDefault();
+//     if (dragFile) {
+//         if (dragFile.size > 500 * 1024) {
+//             alert('Слишком большой файл');
+//         }
+//         if (dragFile.type !== 'image/jpeg' && dragFile.type !== 'image/png') {
+
+//             alert('Можно загружать только JPEG и PNG-файлы');
+//         }
+//         else {
+
+
+//             dragReader.readAsDataURL(dragFile);
+//             dragReader.onload = () => {
+//                 theImage.src = dragReader.result;
+
+//             }
+//         }
+//     }
+
+
+
+
+// });
+// savePhotoBtn.addEventListener('click', () => {
+
+//     const imageSrc = theImage.src;
+//     ws.send(JSON.stringify({
+//         action: 'user:photo',
+//         data: {
+//             user: {
+//                 text: imageSrc
+
+//             }
+//         }
+//     }))
+//     console.log(imageSrc);
+// })
 
 
 
@@ -221,11 +214,16 @@ const actions = {
 
     },
     'message:add': function ({ message }) {
-
+        proxyUsers.users = proxyUsers.users.map(user => {
+            if (user.id == message.user.id) {
+                user.lastMessage = message.text
+            }
+            return user
+        })
 
         const template = `
-        <div class="chat-message-container"><div class="user-photo-container"><img src="" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${message.user.id}"></div><div class="message" data-id="${message.user.id}">
-        <b>${message.user.name}</b> ${message.text}     ${time}
+        <div class="chat-message-container"><div class="user-photo-container"><img src="${message.user.photo}" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${message.user.id}"></div><div class="message" data-id="${message.user.id}">
+        <b>${message.user.name}</b> ${message.text}     ${message.time}
         </div></div>
      `
 
@@ -233,22 +231,24 @@ const actions = {
         container.scrollTop = container.scrollHeight
     },
 
-    'user:list': function ({ users, userId, messageArr }) {
+    'user:list': function ({ users, messages }) {
         proxyUsers.users = [...users]
-        //container.forEach((n, i) => n.textContent = messageArr[i])
-        //    messageArr.slice(0, 100).map((i) => {
-
-        //   });
+        messages.forEach(message => actions['message:add']({message}))
 
 
     },
-    'user:photo': function ({ imageSrc }) {
+    'user:photo': function ({ photo, userId }) {
+        proxyUsers.users.forEach(user => {
+            if (user.id == userId) {
+                user.photo = photo
+            }
+        })
+        const allAvatars = document.querySelectorAll(`[data-role=user-photo][data-id="${userId}"]`)
+        allAvatars.forEach(img => img.src = photo)
 
-        const allAvatars = document.querySelectorAll(`[data-role=user-photo][data-id="${user.id}"]`)
-        allAvatars.src = `${imageSrc}`
+        console.log(photo, userId)
 
-
-    },
+    }
 
 }
 
