@@ -8,11 +8,15 @@ const messageArr = []
 
 function getTime() {
     var today = new Date();
-    var time = today.getHours() + ":" + today.getMinutes();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    hours = (hours < 10) ? ('0' + hours) : ('' + hours);
+    minutes = (minutes < 10) ? ('0' + minutes) : ('' + minutes);
+    var time = hours + ":" + minutes;
     return time;
-    }
+}
 
-    
+
 const actions = {
     'user:connect': function ({ user }) {
         user.id = uuidv4()

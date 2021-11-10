@@ -21,7 +21,7 @@ const proxyUsers = new Proxy({ users: [] }, {
         target[prop] = value;
         numberOfMembers.textContent = target.users.length
         userList.innerHTML = target.users.reduce((prev, user) => {
-            return prev + `<div class="chat-list-container" data-id="${user.id}"><div class="user-photo-container"> <img src="${user.photo}" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${user.id}"></div><div> ${user.name} <span>${user.lastMessage?user.lastMessage:""}</span>  </div></div>`
+            return prev + `<div class="chat-list-container" data-id="${user.id}"><div class="user-photo-container"> <img src="${user.photo}" class="user-photo-chat" id="theImage" data-role="user-photo" data-id="${user.id}"></div><div> ${user.name} <span>${user.lastMessage ? user.lastMessage : ""}</span>  </div></div>`
         }, "")
         return true
     }
@@ -233,7 +233,7 @@ const actions = {
 
     'user:list': function ({ users, messages }) {
         proxyUsers.users = [...users]
-        messages.forEach(message => actions['message:add']({message}))
+        messages.forEach(message => actions['message:add']({ message }))
 
 
     },
