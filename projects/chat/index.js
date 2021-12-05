@@ -33,12 +33,8 @@ authButton.addEventListener('click', event => {
 
   } else {
     authButton.setAttribute('disabled', 'disabled');
-    //self = new User(authForm.nickName.value);
-    //users.push(self);
-    //workServer(); 
     showField(chatField);
     hideField(authFormDisplay);
-    //usersAvatars.push(user);
   }
 });
 
@@ -66,7 +62,7 @@ const uploadAvatarBtn = document.querySelector('#uploadAvatar');
 const uploadAvatarField = document.querySelector('#uploadAvatarField');
 const newAvatarFile = "";
 const newAvatarSubmitBtn = document.querySelector('.new-avatar__form-submit');
-const messageTime = 
+
 
 
 
