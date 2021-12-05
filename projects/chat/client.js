@@ -1,5 +1,3 @@
-// import { WebSocketServer } from "ws"
-
 const ws = new WebSocket('ws://localhost:8000')
 const container = document.querySelector('#messageContainer')
 const button = document.querySelector('#sendMsg')
@@ -26,12 +24,6 @@ const proxyUsers = new Proxy({ users: [] }, {
         return true
     }
 });
-
-
-// const date = new Date();
-// const hours = String(date.getHours()).padStart(2, 0);
-// const minutes = String(date.getMinutes()).padStart(2, 0);
-// const time = `${hours}:${minutes}`;
 
 
 userPhotoInput.addEventListener('change', (e) => {
