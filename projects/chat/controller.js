@@ -1,12 +1,3 @@
-let self = null; 
-let usersList = []; 
-//let usersAvatars = new Map();
-let webSocket = null; 
-
-let messageFromServer = {}; 
- 
-
-
 const authFormDisplay = document.querySelector('#auth'); 
 const authForm = document.forms.authForm; 
 const authButton = authForm.authBtn;
@@ -31,9 +22,6 @@ authButton.addEventListener('click', event => {
        
     } else { 
         authButton.setAttribute('disabled', 'disabled');
-        //self = new User(authForm.nickName.value);
-        //users.push(self);
-        //workServer(); 
         showField(chatField);
         hideField(authFormDisplay);
     }
@@ -67,5 +55,4 @@ uploadAvatarBtn.addEventListener('click', function(e){
   e.preventDefault();
   showField(uploadAvatarField);
 
- 
 });
