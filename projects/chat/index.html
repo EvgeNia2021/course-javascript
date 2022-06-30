@@ -1,0 +1,106 @@
+<!-- <!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8"> -->
+<title>VP-2 Chat</title>
+<!-- <link rel="stylesheet" href="./main.css">
+</head> -->
+
+<div id="app">
+
+  <div class="auth" id="auth">
+    <div class="auth__image-wrapper">
+      <div class="auth-icon"></div>
+      <!-- <svg class="photo-icon">
+        <use xlink:href="./sprite.svg#photo-icon"></use>
+      </svg> -->
+
+    </div>
+    <div class="auth__title">Авторизация</div>
+    <div class="auth__instruction">Введите пожалуйста свой ник для дальнейшей авторизации</div>
+    <form class="auth__form" name="authForm">
+      <div class="reg__container">
+        <input type="text" name="nickName" class="auth__form-input" id="input__name" placeholder="Введите свой ник">
+      </div>
+      <button class="auth__btn" name="authBtn" id="authBtn">Войти</button>
+    </form>
+  </div>
+  <div class="mainarea hidden" id="chatField">
+    <div class="avatar-block hidden" id="uploadAvatarField">
+      <div class="avatar-block__title">Загрузка фото</div>
+
+      <form class="avatar-block__upload">
+        <label class="avatar-block__uploadCircle">
+          <img src="" alt="" class="upload-avatar-image" data-role="user-photo" id="dragArea">
+          <input type="file" id="photoInput">
+          <!-- <img src="./images/default__photo.png" alt="" id="uloadedPhoto"> -->
+          </input></label>
+        <div class="avatar-block__username" id="avatarBlockUsername">Ник</div>
+        <div class="avatar-block__closeBtn" id="closeBtn">
+          <!-- <svg class="closeBtn">
+            <use xlink:href="./sprite.svg#closeBtn"></use>
+          </svg> -->
+        </div>
+      </form>
+      <div class="avatar-save-btn"><button class="avatar-cut__saveBtn" id="saveBtn">Сохранить</button></div>
+      
+    </div>
+    <div class="avatar-cut" style="display: none;">
+      <div class="avatar-cut__area">
+        <img src="" alt="">
+      </div>
+      <div class="avatar-cut__instruction">Область для профильной фотографии</div>
+      <div class="avatar-cut__buttons">
+        <button class="avatar-cut__cancelBtn">Отмена</button>
+        <button class="avatar-cut__saveBtn">Сохранить</button>
+      </div>
+    </div>
+    <!-- <div class="avatar-load" style="display: none;">
+    <div class="avatar-load__title"></div>
+    <div class="avatar-load__block">
+      <div class="avatar-load__img"></div>
+      <div class="avatar-load__nickname"></div>
+    </div>
+  </div> -->
+
+    <div class="left">
+      <div class="left__menu-btn" id="uploadAvatar">
+        <!-- <svg class="menuBtn">
+          <use xlink:href="./sprite.svg#menuBtn"></use>
+        </svg> -->
+      </div>
+      <div class="left__currentUser">
+        <div class="user-photo" data-role="user-photo"></div>
+        <div class="user-name" data-role="user-name"></div>
+      </div>
+      <div class="left__user-list"></div>
+      <div class="user-list-header">
+        Все пользователи:
+      </div>
+      <div class="user-list" id="user-list">
+      </div>
+    </div>
+    <div class="right">
+      <div class="right__header">
+        <div class="right__title">Чат</div>
+        <div class="number-of-members" id="numberOfMembers"></div>
+      </div>
+      <div class="right__chatArea" id="messageContainer">
+        <!-- <ul class="list-group" >
+        </ul> -->
+      </div>
+      <div class="right__messageArea">
+        <div class="right__form">
+          <input type="text" class="right__input" placeholder="Введите сообщение..." id="messageInput">
+          <input type="submit" class="right__submit" value="Отправить" id="sendMsg">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./controller.js"></script>
+
+</div>
+<!-- 
+</html> -->
